@@ -1,10 +1,15 @@
 import { Router } from "express";
-import { login } from "../controllers/auth.js";
-import { loginMiddle } from "../middlewares/authMiddleware.js"
+
 const routes = Router()
 
 routes.post("/registration", (req, res) => {
+  // console.log('/registration body', req.body);
+  // console.log('/registration params', req.params);
+  // console.log('/registration query', req.query);
   const {name, surname, email, age, password} = req.body
+  // check user by email
+  
+  
   res.json({
     body: req.body || {},
     params: req.params,
@@ -12,5 +17,10 @@ routes.post("/registration", (req, res) => {
   })
 })
 
-routes.post("/login", loginMiddle, login)
+routes.post("/login", (req, res) => {
+  const {email, password} = req.body
+  res.json(req.body)
+})
+
+
 export default routes

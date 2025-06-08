@@ -3,6 +3,7 @@ import fs from "fs"
 import "dotenv/config"
 import authRoutes from "./src/routes/auth.js";
 import orderRoutes from "./src/routes/orders.js";
+import { authMiddleware } from "./src/middlewares/authMiddleware.js";
 
 
 const app = express()
@@ -11,7 +12,7 @@ const port = process.env.PORT ?? 3000;
 app.use(express.json())
 
 app.use("/auth", authRoutes)
-app.use("/orders", orderRoutes)
+app.use("/orders", authMiddleware, orderRoutes)
 // app.post("/users", (req, res) => {
 // console.log('post: ', req.method, req.url);
 // console.log("body: ", req.body);

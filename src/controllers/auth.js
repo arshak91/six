@@ -4,7 +4,17 @@ import bcrypt from "bcrypt"
 
 export const login = async (req, res) => {
   const {email, password} = req.body
-  const secret = process.env.JWT_SECRET || "hello"
+  const secret = process.env.JWT_SECRET || "hello";
+  console.log("user: ", req.user);
+
+  const pass = bcrypt.compareSync(password, req.user.password);
+
+  console.log('pass: ', pass);
+  if (!pass) {
+    return res.status(401).json({
+      message: "Sxal password!"
+    })
+  }
   const token = jwt.sign({
     email
   }, secret, {

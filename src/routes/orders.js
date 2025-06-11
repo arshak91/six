@@ -5,7 +5,7 @@ import { createOrder } from "../controllers/order.js";
 const routes = Router();
 
 
-routes.post("/", createOrder)
+routes.post("/", authMiddleware, createOrder)
 
 routes.post("/item", (req, res) => {
   res.json(req.body)

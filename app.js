@@ -3,16 +3,21 @@ import fs from "fs"
 import "dotenv/config"
 import authRoutes from "./src/routes/auth.js";
 import orderRoutes from "./src/routes/orders.js";
+import uploadRoutes from "./src/routes/upload.js";
 import { authMiddleware } from "./src/middlewares/authMiddleware.js";
-
-
+import path from "path";
+import { dirname } from 'node:path';
+import { fileURLToPath } from 'node:url';
+    
+const __dirname = dirname(fileURLToPath(import.meta.url));
 const app = express()
 const port = process.env.PORT ?? 3000;
 // const port = "jhdbyvegv"
 app.use(express.json())
-
+app.use('/images', express.static(path.join(__dirname, 'images')))
 app.use("/auth", authRoutes)
 app.use("/orders", orderRoutes)
+app.use("/upload", uploadRoutes)
 // app.post("/users", (req, res) => {
 // console.log('post: ', req.method, req.url);
 // console.log("body: ", req.body);
